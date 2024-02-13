@@ -1,4 +1,9 @@
 package com.example.shopbackend.repository;
 
-public interface dataRepository {
+import com.example.shopbackend.model.shop;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface dataRepository  extends JpaRepository<shop, Long> {
 }
