@@ -25,4 +25,9 @@ public class dataController {
     public List<shop> showData(){
         return dataRep.allData();
     }
+
+    @GetMapping("item_price")
+    public List<Object[]> products(){
+        return dataRep.selectData();
+    }
 }

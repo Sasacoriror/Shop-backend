@@ -13,5 +13,6 @@ public interface dataRepository  extends JpaRepository<shop, Long> {
     @Query(value = "select * from shop", nativeQuery = true)
     List<shop> allData();
 
-
+    @Query(value = "select item, price from shop", nativeQuery = true)
+    List<Object[]> selectData();
 }
