@@ -23,7 +23,7 @@ public class dataController {
 
     @GetMapping("showAll")
     public List<shop> showData(){
-        return dataRep.allData();
+        return dataRep.all_Data();
     }
 
     @GetMapping("item_price")
