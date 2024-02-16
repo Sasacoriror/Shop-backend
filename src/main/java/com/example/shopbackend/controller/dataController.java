@@ -28,6 +28,11 @@ public class dataController {
 
     @GetMapping("item_price")
     public List<Object[]> products(){
-        return dataRep.selectData();
+        return dataRep.select_Data();
+    }
+
+    @GetMapping("sale")
+    public List<Object[]> sales(){
+        return dataRep.sale_Data();
     }
 }

@@ -11,22 +11,51 @@ import java.util.List;
 
 @Repository
 public interface dataRepository  extends JpaRepository<shop, Long> {
-    public static final Logger log = LoggerFactory.getLogger(dataRepository.class);
+    Logger log = LoggerFactory.getLogger(dataRepository.class);
 
+    //Fetching from database
     @Query(value = "select * from shop", nativeQuery = true)
     List<shop> allData();
 
+    @Query(value = "select item, price from shop", nativeQuery = true)
+    List<Object[]> selectData();
+
+    @Query(value = "select item, blackFridayPrice from shop ", nativeQuery = true)
+    List<Object[]> saleData();
+
+    //Logging every fetch
     default List<shop> all_Data(){
         try {
             List<shop> data = allData();
-            log.info("All data fetched from database succesfully");
+            log.info("Fetching all data from shop table");
             return data;
         }catch (Exception e){
-            log.error("An error occurred while trying to fetch all the data from the database: {}", e.getMessage());
+            log.error("An ERROR occurred while trying to fetch all the data from the table shop: {}", e.getMessage());
             return null;
         }
     }
 
-    @Query(value = "select item, price from shop", nativeQuery = true)
-    List<Object[]> selectData();
+    default List<Object[]> select_Data(){
+        try {
+            List<Object[]> data = selectData();
+            log.info("Fetching item and price from shop table");
+            return data;
+        } catch (Exception e){
+            log.error("An ERROR occurred fetchig item and price from table shop: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    default List<Object[]> sale_Data(){
+        try {
+            List<Object[]> data = saleData();
+            log.info("Fetching item and blackFridayPrice from table shop");
+            return data;
+        } catch (Exception e){
+            log.error("An ERROR occured fetching item and blackFridayPrice from table shop: {}", e.getMessage());
+            return null;
+        }
+    }
+
+
 }
