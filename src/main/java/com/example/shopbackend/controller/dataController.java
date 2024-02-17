@@ -2,9 +2,8 @@ package com.example.shopbackend.controller;
 
 import com.example.shopbackend.model.shop;
 import com.example.shopbackend.repository.dataRepository;
-import com.example.shopbackend.repository.shopRepository;
+import com.example.shopbackend.repository.fetaureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +14,8 @@ public class dataController {
 
     @Autowired
     private dataRepository dataRep;
+    @Autowired
+    private fetaureRepository fetRep;
 
     @PostMapping("addItems")
     public shop shopAdd(@RequestBody shop shopAdd){
@@ -35,4 +36,19 @@ public class dataController {
     public List<Object[]> sales(){
         return dataRep.sale_Data();
     }
+/*
+    public boolean featuerValue(){
+        return fetRep.saleValue();
+    }
+
+    @GetMapping("feature")
+    public List<Object[]> feature(){
+        if (featuerValue() == true){
+            return products();
+        } else {
+            return sales();
+        }
+    }
+
+ */
 }

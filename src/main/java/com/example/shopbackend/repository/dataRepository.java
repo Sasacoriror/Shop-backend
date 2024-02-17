@@ -10,7 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface dataRepository  extends JpaRepository<shop, Long> {
+public interface dataRepository extends JpaRepository<shop, Long> {
+    //https://stackoverflow.com/questions/38881434/how-to-call-mysql-function-from-spring-data-repositories
     Logger log = LoggerFactory.getLogger(dataRepository.class);
 
     //Fetching from database
@@ -20,10 +21,10 @@ public interface dataRepository  extends JpaRepository<shop, Long> {
     @Query(value = "select item, price from shop", nativeQuery = true)
     List<Object[]> selectData();
 
-    @Query(value = "select item, blackFridayPrice from shop ", nativeQuery = true)
+    @Query(value = "select item, black_friday_price from shop ", nativeQuery = true)
     List<Object[]> saleData();
 
-    //Logging every fetch
+    //Logging every fetch and error
     default List<shop> all_Data(){
         try {
             List<shop> data = allData();
@@ -56,6 +57,4 @@ public interface dataRepository  extends JpaRepository<shop, Long> {
             return null;
         }
     }
-
-
 }
