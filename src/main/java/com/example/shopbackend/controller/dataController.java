@@ -36,7 +36,7 @@ public class dataController {
     public List<Object[]> sales(){
         return dataRep.sale_Data();
     }
-/*
+
     public boolean featuerValue(){
         return fetRep.saleValue();
     }
@@ -50,5 +50,4 @@ public class dataController {
         }
     }
 
- */
 }
