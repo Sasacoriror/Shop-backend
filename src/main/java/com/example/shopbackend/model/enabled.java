@@ -27,6 +27,4 @@ public class enabled {
         this.enabledValue = enabledValue;
     }
 
-
-
 }

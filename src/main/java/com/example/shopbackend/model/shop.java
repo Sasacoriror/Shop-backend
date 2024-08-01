@@ -14,8 +14,21 @@ public class shop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String item;
-    private int price;
-    private int blackFridayPrice;
+    private Prices prices;
+
+    /*private int price;
+    private int blackFridayPrice;*/
+
+    public shop(Long id, String item, Prices prices) {
+        super();
+        this.id = id;
+        this.item = item;
+        this.prices = prices;
+    }
+
+    public shop() {
+
+    }
 
     public Long getId() {
         return id;
@@ -33,6 +46,11 @@ public class shop {
         this.item = item;
     }
 
+    public Prices getPrices() {
+        return prices;
+    }
+
+    /*
     public int getPrice() {
         return price;
     }
@@ -47,9 +65,16 @@ public class shop {
 
     public void setBlackFridayPrice(int blackFridayPrice) {
         this.blackFridayPrice = blackFridayPrice;
+    }*/
+
+
+    @Override
+    public String toString() {
+        return "shop{" +
+                "id=" + id +
+                ", item='" + item + '\'' +
+                ", prices=" + prices +
+                '}';
     }
-
-
-
 }
 
