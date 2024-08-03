@@ -4,6 +4,7 @@ package com.example.shopbackend.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 
 @Entity
@@ -13,6 +14,8 @@ public class shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Size(min = 2, max = 50, message = "Must be between 2 and 50 letters!")
     private String item;
     private Prices prices;
 

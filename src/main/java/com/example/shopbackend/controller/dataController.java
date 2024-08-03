@@ -3,6 +3,7 @@ package com.example.shopbackend.controller;
 import com.example.shopbackend.model.shop;
 import com.example.shopbackend.repository.dataRepository;
 import com.example.shopbackend.repository.fetaureRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class dataController {
     private fetaureRepository fetRep;
 
     @PostMapping("addItems")
-    public shop shopAdd(@RequestBody shop shopAdd){
+    public shop shopAdd(@Valid @RequestBody shop shopAdd){
         return dataRep.save(shopAdd);
     }
 
