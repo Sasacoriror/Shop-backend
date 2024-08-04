@@ -5,10 +5,20 @@ import com.example.shopbackend.repository.dataRepository;
 import com.example.shopbackend.repository.fetaureRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat.URI;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("api/")
@@ -19,9 +29,15 @@ public class dataController {
     @Autowired
     private fetaureRepository fetRep;
 
-    @PostMapping("addItems")
-    public shop shopAdd(@Valid @RequestBody shop shopAdd){
-        return dataRep.save(shopAdd);
+    @PostMapping("add")
+    public ResponseEntity<shop> shopAdd(@Valid @RequestBody shop shopAdd){
+        shop shop = dataRep.save(shopAdd);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(shop.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("showAll")
@@ -29,14 +45,24 @@ public class dataController {
         return dataRep.all_Data();
     }
 
-    @GetMapping("item_price")
-    public List<Object[]> products(){
-        return dataRep.select_Data();
+    @GetMapping( "add/{id}")
+    public EntityModel<shop> getItemById(@PathVariable long id){
+        Optional<shop> shop = dataRep.findById(id);
+
+        if(shop.isEmpty()){
+            throw new RuntimeException("id: "+id);
+        }
+
+        EntityModel<shop> entityModel = EntityModel.of(shop.get());
+        WebMvcLinkBuilder link = linkTo(methodOn(dataController.class).showData());
+        entityModel.add(link.withRel("all-users"));
+
+        return entityModel;
     }
 
-    @GetMapping("sale")
-    public List<Object[]> sales(){
-        return dataRep.sale_Data();
+    @DeleteMapping("delete/{id}")
+    public void delete(@PathVariable long id){
+        dataRep.deleteById(id);
     }
 
     public boolean featuerValue(){
@@ -46,13 +72,9 @@ public class dataController {
     @GetMapping("feature")
     public List<Object[]> feature(){
         if (featuerValue() == true){
-            return products();
+            return dataRep.select_Data();
         } else {
-            return sales();
+            return dataRep.sale_Data();
         }
     }
-
-
-
-
 }
