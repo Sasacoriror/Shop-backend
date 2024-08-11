@@ -1,0 +1,25 @@
+stages:
+  - build
+  - test
+  - deploy
+
+image_build:
+  stage: build
+  script:
+    - echo "Stage build, Dockerfile:"
+    - cat Dockerfile
+    - docker build -t shopBackend:$CI_PIPELINE_ID .
+
+code_test:
+  stage: test
+  script:
+    - cd src/main/java/com/example/shopbackend/controller
+    - cat dataController.java
+
+container_deploy1:
+  stage: deploy
+  script:
+    - docker run -d -p 8080 --name canarioProject-test-$CI_PIPELINE_ID shopBackend:$CI_PIPELINE_ID
+    - sleep 10 && curl $(ifconfig ens3 | grep "inet " | sed -e 's/.* inet //g' | sed -e 's/ .*//g'):$(docker port canarioProject-test-$CI_PIPELINE_ID | grep 0.0.0 | grep "8080/tcp" |  sed -e 's/.*://g')
+    - docker stop canarioProject-test-$CI_PIPELINE_ID
+    - docker rm canarioProject-test-$CI_PIPELINE_ID

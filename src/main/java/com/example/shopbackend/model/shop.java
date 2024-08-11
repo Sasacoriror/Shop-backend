@@ -53,24 +53,6 @@ public class shop {
         return prices;
     }
 
-    /*
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public int getBlackFridayPrice() {
-        return blackFridayPrice;
-    }
-
-    public void setBlackFridayPrice(int blackFridayPrice) {
-        this.blackFridayPrice = blackFridayPrice;
-    }*/
-
-
     @Override
     public String toString() {
         return "shop{" +

@@ -1,5 +1,6 @@
 package com.example.shopbackend.controller;
 
+import com.example.shopbackend.exception.ShopNotFoundException;
 import com.example.shopbackend.model.shop;
 import com.example.shopbackend.repository.dataRepository;
 import com.example.shopbackend.repository.fetaureRepository;
@@ -50,12 +51,12 @@ public class dataController {
         Optional<shop> shop = dataRep.findById(id);
 
         if(shop.isEmpty()){
-            throw new RuntimeException("id: "+id);
+            throw new ShopNotFoundException("id: "+id);
         }
 
         EntityModel<shop> entityModel = EntityModel.of(shop.get());
         WebMvcLinkBuilder link = linkTo(methodOn(dataController.class).showData());
-        entityModel.add(link.withRel("all-users"));
+        entityModel.add(link.withRel("all-prices"));
 
         return entityModel;
     }
