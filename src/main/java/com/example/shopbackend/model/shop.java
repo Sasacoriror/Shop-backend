@@ -17,6 +17,7 @@ public class shop {
 
     @Size(min = 2, max = 50, message = "Must be between 2 and 50 letters!")
     private String item;
+
     private Prices prices;
 
     /*private int price;

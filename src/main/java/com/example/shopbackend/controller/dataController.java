@@ -38,7 +38,9 @@ public class dataController {
                 .path("/{id}")
                 .buildAndExpand(shop.getId())
                 .toUri();
+        System.out.println();
         return ResponseEntity.created(location).build();
+
     }
 
     @GetMapping("showAll")
@@ -60,6 +62,23 @@ public class dataController {
 
         return entityModel;
     }
+
+    @GetMapping("compare1")
+    public List<shop> compare(@RequestParam List<Long> ids){
+        return dataRep.findAllById(ids);
+    }
+
+    @GetMapping("compare2")
+    public List<EntityModel<shop>> Itemss(@RequestParam List<String> items){
+        List<shop> item = dataRep.findByItemIn(items);
+
+        return item.stream()
+                .map(shop -> EntityModel.of(shop,
+                        WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(dataController.class).showData())
+                                .withRel("all-prices")))
+                .collect(Collectors.toList());
+    }
+
 
     @DeleteMapping("delete/{id}")
     public void delete(@PathVariable long id){

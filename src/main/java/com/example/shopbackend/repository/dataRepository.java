@@ -57,4 +57,7 @@ public interface dataRepository extends JpaRepository<shop, Long> {
             return null;
         }
     }
+
+    List<shop> findByItemIn(List<String> items);
+
 }
